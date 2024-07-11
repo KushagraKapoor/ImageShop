@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .result {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .product {
+            flex: 1 1 calc(25% - 20px);
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-link {
+            color: blue;
+            text-decoration: none;
+        }
+        .product-link:hover {
+            text-decoration: underline;
+        }
+        .product-image {
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detection Results</h1>
+        <ul>
+            {% for result in results %}
+                <li class="result">
+                    {% if result.products %}
+                        {% for product in result.products %}
+                            <div class="product">
+                                <div class="product-title">{{ product.title }}</div>
+                                {% if product.image != "NA" %}
+                                    <img src="{{ product.image }}" alt="{{ product.title }}" class="product-image">
+                                {% endif %}
+                                <div>Price: {{ product.price }}</div>
+                                <div>Rating: {% if product.rating != "NA" %}{{ product.rating }}{% else %}Not available{% endif %}</div>
+                                <div>Reviews: {% if product.reviews != "NA" and product.reviews != "M.R.P:" %}{{ product.reviews }}{% else %}Not available{% endif %}</div>
+                                <div><a href="{% url 'product_summary' %}?url={{ product.link }}" class="product-link" target="_blank">View Product</a></div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No products found for this item.</p>
+                    {% endif %}
+                </ li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

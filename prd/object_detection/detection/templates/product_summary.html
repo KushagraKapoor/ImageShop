@@ -1,0 +1,111 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .product-image {
+            max-width: 100%;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .product-details, .product-summary, .review-summary {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .product-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .product-link a:hover {
+            background-color: #45a049;
+        }
+        .review-summary {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+        }
+        /* Styles for loading GIF */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #loading img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading GIF -->
+    <div id="loading">
+        <img src="{% static 'images/loading.gif' %}" alt="Loading...">
+    </div>
+
+    <div class="container" style="display:none;">
+        <h1>Product Summary</h1>
+        <div class="product">
+            <div class="product-title">{{ product.title }}</div>
+            {% if product.image != "NA" %}
+                <img src="{{ product.image }}" alt="{{ product.title }}" class="product-image">
+            {% endif %}
+            <div class="product-details">Price: {{ product.price }}</div>
+            <div class="product-details">Rating: {{ product.rating }}</div>
+            <div class="product-details">Reviews: {{ product.reviews }}</div>
+            <div class="product-link"><a href="{{ product.link }}">Buy Now</a></div>
+            <div class="product-summary">Summary: {{ product.summary }}</div>
+            <div class="review-summary">Review Summary: {{ product.review_summary }}</div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle loading GIF
+        document.addEventListener("DOMContentLoaded", function() {
+            var loading = document.getElementById("loading");
+            var container = document.querySelector(".container");
+            
+            // Simulate loading time (you can remove the timeout in a real scenario)
+            setTimeout(function() {
+                loading.style.display = "none";
+                container.style.display = "block";
+            }, 2000); // Simulate a 2-second load time
+        });
+    </script>
+</body>
+</html>
